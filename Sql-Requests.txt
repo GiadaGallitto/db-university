@@ -1,0 +1,66 @@
+Below are the commands inserted 
+in the sql to select certain data from the db-university tables :
+
+
+1) Select all students born in 1990
+
+SELECT * 
+FROM `students` 
+WHERE YEAR(`date_of_birth`) = '1990';
+
+
+
+2) Select all courses worth more than 10 credits
+
+SELECT * 
+FROM `courses` 
+WHERE `cfu` > '10';
+
+
+
+3) Select all students who are over 30 years old
+
+SELECT * 
+FROM `students` 
+WHERE YEAR(`date_of_birth`) < '1993-01-01';
+
+
+
+4) Select all the courses of the first semester of the first year of any degree course
+
+SELECT * 
+FROM `courses` 
+WHERE `year` = '1' 
+AND `period` = 'I semestre';
+
+
+
+5) Select all exam sessions that take place in the afternoon (after 2 pm) of 06/20/2020
+
+SELECT * 
+FROM `exams` 
+WHERE `date` = '2020-06-20' 
+AND `hour` > '14:00:00';
+
+
+
+6) Select all master's degree programs
+
+SELECT * 
+FROM `degrees` 
+WHERE `level` = 'Magistrale';
+
+
+
+7) How many departments does the university consist of? (Answer = 12)
+
+SELECT COUNT(*) 
+FROM `departments`;
+
+
+
+8) How many teachers don't have a phone number? (Answer = 50)
+
+SELECT COUNT(*) 
+FROM `teachers` 
+WHERE `phone` IS NULL;
