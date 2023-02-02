@@ -14,11 +14,12 @@ WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
 
 2) Select all the Master's Degree Courses of the Department of Neuroscience
 
-SELECT `degrees`.`name` AS `Corso_di_Laurea`, `departments`.`name` AS `Dipartimento`
+SELECT `degrees`.`name` AS `Corso_di_Laurea`, `departments`.`name` AS `Dipartimento`, `degrees`.`level` AS `Livello`
 FROM `degrees`
 JOIN `departments`
 ON `degrees`.`department_id` = `departments`.`id`
-WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
+WHERE `departments`.`name` = 'Dipartimento di Neuroscienze'
+AND `degrees`.`level` = 'Magistrale';
 
 
 
@@ -37,17 +38,41 @@ WHERE `teachers`.`id` = 44;
 4) Select all students with data relating to the degree course they are enrolled
    in and therelevant department, in alphabetical order by surname and first name
 
+SELECT `students`.`name` AS `Nome`, `students`.`surname` AS `Cognome`, `degrees`.`name`,`departments`.`name`
+FROM `students`
+JOIN `degrees`
+ON `students`.`degree_id` = `degrees`.`id`
+JOIN `departments`
+ON `departments`.`id` = `degrees`.`department_id`
+ORDER BY `students`.`name`, `students`.`surname` ASC;
 
 
 
 5) Select all degree programs with related courses and teachers
 
-
+SELECT `degrees`.`name` AS `Corso_di_Laurea`, `courses`.`name` AS `Corso`, `teachers`.`name`
+FROM `teachers` AS `Insegnante`
+JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees`
+ON `degrees`.`id` = `courses`.`degree_id`;
 
 
 6) Select all teachers who teach in the Department of Mathematics
 
-
+SELECT DISTINCT `teachers`.`id`, `teachers`.`name` AS `Insegnante`, `departments`.`name` AS `Dipartimento`
+FROM `teachers`
+JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees`
+ON `degrees`.`id` = `courses`.`degree_id`
+JOIN `departments`
+ON `departments`.`id` = `degrees`.`department_id`
+WHERE `departments`.`name` = 'Dipartimento di Matematica';
 
 
 7) BONUS: Select for each student how many exam attempts he took for
